@@ -1,12 +1,12 @@
-# firstattemptatmaps
+# Map Prototype
 
-Parte do mapa
+Main piece of the Zenith's App project 
 
 ## Features
-Gera posições aleatorias em sao carlos, simulando a sonda. Faz uma animaçãozinha apontando a camera para a última localização
+Generates random places in São Carlos(SP), Brazil. The main target is to simulate the flight of a Space Probe.
 
 ## Note
-Precisa da API do google maps em `android/app/src/main/AndroidManifest.xml`
+Needs Goggle Maps API in `android/app/src/main/AndroidManifest.xml`
 
 Reacts to the following events:
 
