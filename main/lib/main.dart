@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zenith_monitor/app/bloc/data_bloc/data_bloc.dart';
 import 'package:zenith_monitor/app/bloc/location_bloc/location_bloc.dart';
+import 'package:zenith_monitor/app/bloc/login_bloc/login_bloc.dart';
 import 'package:zenith_monitor/app/bloc/map_bloc/map_bloc.dart';
 import 'package:zenith_monitor/app/bloc/status_bloc/status_bloc.dart';
 import 'package:zenith_monitor/app/bloc/terminal_bloc/terminal_bloc.dart';
+import 'package:zenith_monitor/app/components/firebase_authentication.dart';
 import 'package:zenith_monitor/app/components/firebase_receiver.dart';
 import 'package:zenith_monitor/app/components/firebase_uploader.dart';
 import 'package:zenith_monitor/app/components/local_database.dart';
 import 'package:zenith_monitor/app/components/usb.dart';
 import 'package:zenith_monitor/app/components/location.dart';
 import 'package:zenith_monitor/app/bloc/logger_bloc/logger_bloc.dart';
+import 'package:zenith_monitor/app/views/loginPage/login.dart';
 
-import 'app/views/loginPage/fakeLoginPage.dart';
+// import 'app/views/loginPage/fakeLoginPage.dart';
 import 'app/views/mainScreen/widgets/mainScreenWidget.dart';
 import 'app/views/terminal/terminal.dart';
 
@@ -25,6 +28,13 @@ class Application extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        //eventually this will be the only provider in the file
+        BlocProvider(
+          create: (context) => LoginBloc(
+            AuthManager(),
+          ),
+          child: Container(),
+        ),
         BlocProvider(
           create: (context) => DataBloc(
             FirebaseReceiver(),
@@ -45,6 +55,7 @@ class Application extends StatelessWidget {
             BlocProvider.of<DataBloc>(context),
             FirebaseUploader(),
             LocalDatabase(),
+            // BlocProvider.of<LoginBloc>(context).authManager,
           ),
           child: Container(),
         ),
@@ -70,9 +81,9 @@ class Application extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Colors.black,
         ),
-        initialRoute: '/map',
+        initialRoute: '/login',
         routes: {
-          '/login': (context) => LoginPage(),
+          '/login': (context) => Login(),
           '/map': (context) => MainScreen(),
           '/terminal': (context) => TerminalView2(),
         },

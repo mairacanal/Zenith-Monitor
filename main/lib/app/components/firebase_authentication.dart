@@ -18,7 +18,7 @@ class AuthManager {
   }
 
   Future<bool> isLogged() {
-    return Future.delayed(Duration(milliseconds: 500), () => true);
+    return Future.delayed(Duration(milliseconds: 500), () => false);
   }
 
   // sign in
