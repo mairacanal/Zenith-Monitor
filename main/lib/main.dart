@@ -15,14 +15,20 @@ import 'package:zenith_monitor/app/components/location.dart';
 import 'package:zenith_monitor/app/bloc/logger_bloc/logger_bloc.dart';
 import 'package:zenith_monitor/app/views/loginPage/login.dart';
 
+<<<<<<< HEAD
 // import 'app/views/loginPage/fakeLoginPage.dart';
 import 'app/views/mainScreen/widgets/mainScreenWidget.dart';
+=======
+import 'app/views/loginPage/fakeLoginPage.dart';
+import 'app/views/mainScreen/widgets/main_screen_widget.dart';
+>>>>>>> origin/master
 import 'app/views/terminal/terminal.dart';
 
 void main() {
   runApp(Application());
 }
 
+// just in case
 class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

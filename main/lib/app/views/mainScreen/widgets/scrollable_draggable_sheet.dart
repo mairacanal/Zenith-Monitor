@@ -16,6 +16,7 @@ class _DraggableSheetState extends State<DraggableSheet> {
     return DraggableScrollableSheet(
         initialChildSize: 0.27,
         minChildSize: 0.1,
+        expand: false,
         builder: (BuildContext context, scroller) {
           return Container(
               decoration: BoxDecoration(
@@ -35,6 +36,7 @@ class _DraggableSheetState extends State<DraggableSheet> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GridView.count(
+                      physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       crossAxisCount: 2,
                       crossAxisSpacing: 5,
@@ -206,7 +208,9 @@ class _ScrollableSheetMainCardState extends State<ScrollableSheetMainCard> {
       null,
       other1,
       null,
-      other2
+      other2,
+      null,
+      temperatura
     ];
     List<Widget> scrollableSheetList = [];
 
@@ -224,22 +228,22 @@ class _ScrollableSheetMainCardState extends State<ScrollableSheetMainCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(10),
-        child: Container(
-          height: 430,
-          width: 400,
-          child: Card(
-            child: ListView(
-              children: generateSheetLineList(),
-            ),
-            color: Colors.white,
-            shadowColor: Colors.black,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            elevation: 20,
+      padding: EdgeInsets.all(10),
+      child: Container(
+        width: double.infinity,
+        child: Card(
+          child: Column(
+            children: generateSheetLineList(),
           ),
-        ));
+          color: Colors.white,
+          shadowColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          elevation: 20,
+        ),
+      ),
+    );
   }
 }
 
@@ -264,35 +268,69 @@ class ScrollableSheetLine extends StatefulWidget {
 }
 
 class _ScrollableSheetLineState extends State<ScrollableSheetLine> {
-  Widget buildPreviousText() {
+  Widget _buildDatatype() {
+    return Expanded(
+      flex: (widget.datatype.name == "MISSION TIME") ? 2 : 3,
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          (widget.datatype.name == "MISSION TIME")
+              ? widget.datatype.name
+              : widget.datatype.name + " (${widget.datatype.unit})",
+          style: TextStyle(
+            color: Colors.black54,
+            fontSize: (SizeConfig.blockSizeHorizontal) * 3,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActualText() {
+    return Expanded(
+      flex: (widget.datatype.name == "MISSION TIME") ? 3 : 2,
+      child: Text(
+        widget.datatype.numericData,
+        textAlign: (widget.datatype.name == "MISSION TIME")
+            ? TextAlign.center
+            : TextAlign.left,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: (SizeConfig.blockSizeHorizontal) * 4.5,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPreviousText() {
     if (widget.datatype.name != "MISSION TIME") {
       return Expanded(
-          flex: 2,
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  "PREVIOUS:",
-                  style: TextStyle(
-                    color: Colors.grey[350],
-                    fontSize: (SizeConfig.blockSizeHorizontal) * 2.5,
-                  ),
+        flex: 2,
+        child: FittedBox(
+          fit: BoxFit.fitHeight,
+          child: Column(
+            children: <Widget>[
+              Text(
+                "PREVIOUS:",
+                style: TextStyle(
+                  color: Colors.grey[350],
+                  fontSize: (SizeConfig.blockSizeHorizontal) * 2.5,
                 ),
-                Text(
-                  (widget.datatype.unit == "°")
-                      ? widget.datatype.previousData + widget.datatype.unit
-                      : widget.datatype.previousData +
-                          " " +
-                          widget.datatype.unit,
-                  style: TextStyle(
-                    color: Colors.grey[350],
-                    fontSize: (SizeConfig.blockSizeHorizontal) * 3,
-                  ),
+              ),
+              Text(
+                (widget.datatype.unit == "°")
+                    ? widget.datatype.previousData + widget.datatype.unit
+                    : widget.datatype.previousData + " " + widget.datatype.unit,
+                style: TextStyle(
+                  color: Colors.grey[350],
+                  fontSize: (SizeConfig.blockSizeHorizontal) * 3,
                 ),
-              ],
-            ),
-          ));
+              ),
+            ],
+          ),
+        ),
+      );
     } else {
       return SizedBox.shrink();
     }
@@ -301,57 +339,29 @@ class _ScrollableSheetLineState extends State<ScrollableSheetLine> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Expanded(
-          flex: (widget.datatype.name == "MISSION TIME") ? 2 : 3,
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: (widget.datatype.name == "MISSION TIME") ? 25 : 20,
-              left: 20,
-              right: 20,
-              bottom: 20,
-            ),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                (widget.datatype.name == "MISSION TIME")
-                    ? widget.datatype.name
-                    : widget.datatype.name + " (${widget.datatype.unit})",
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: (SizeConfig.blockSizeHorizontal) * 3,
-                ),
-              ),
-            ),
+    return Container(
+      height: 62,
+      color: Colors.transparent,
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: (widget.datatype.name == "MISSION TIME") ? 20 : 15,
+          left: 20,
+          right: 20,
+          bottom: 15,
+        ),
+        child: Container(
+          height: 27,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              _buildDatatype(),
+              _buildActualText(),
+              _buildPreviousText()
+            ],
           ),
         ),
-        Expanded(
-          flex: (widget.datatype.name == "MISSION TIME") ? 3 : 2,
-          child: Padding(
-            padding: EdgeInsets.only(
-              left: 20,
-              right: 10,
-              top: 20,
-              bottom: 20,
-            ),
-            child: Text(
-              widget.datatype.numericData,
-              textAlign: (widget.datatype.name == "MISSION TIME")
-                  ? TextAlign.center
-                  : TextAlign.left,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: (SizeConfig.blockSizeHorizontal) * 4.5,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-        buildPreviousText()
-      ],
+      ),
     );
   }
 }
@@ -360,7 +370,7 @@ class ScrollableSheetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 20),
         child: RaisedButton(
           padding: EdgeInsets.all(10),
           shape: RoundedRectangleBorder(
@@ -368,29 +378,32 @@ class ScrollableSheetButton extends StatelessWidget {
           ),
           elevation: 10,
           color: Colors.black,
-          child: Row(
-            children: <Widget>[
-              Image.asset(
-                "assets/images/zenith_black_logo.png",
-                height: 50,
-              ),
-              Text(
-                "Get Statistics",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: (SizeConfig.blockSizeHorizontal) * 4.7,
+          child: Container(
+            width: double.infinity,
+            child: Row(
+              children: <Widget>[
+                Image.asset(
+                  "assets/images/zenith_black_logo.png",
+                  height: 50,
                 ),
-              ),
-              Expanded(
-                  flex: 2,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
-                    ),
-                  ))
-            ],
+                Text(
+                  "Get Statistics",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: (SizeConfig.blockSizeHorizontal) * 4.7,
+                  ),
+                ),
+                Expanded(
+                    flex: 2,
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                      ),
+                    ))
+              ],
+            ),
           ),
           onPressed: () {},
         ));
