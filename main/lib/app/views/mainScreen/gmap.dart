@@ -38,6 +38,7 @@ class _GMapsConsumerState extends State<GMapsConsumer> {
           return Center(child: CircularProgressIndicator());
         } else {
           return Center(child: Text("you shouldn't be seeing this"));
+          //asda
         }
       },
     );
