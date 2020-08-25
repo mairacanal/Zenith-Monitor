@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zenith_monitor/app/bloc/data_bloc/data_bloc.dart';
-import 'package:zenith_monitor/app/bloc/location_bloc/location_bloc.dart';
-import 'package:zenith_monitor/app/bloc/login_bloc/login_bloc.dart';
-import 'package:zenith_monitor/app/bloc/map_bloc/map_bloc.dart';
-import 'package:zenith_monitor/app/bloc/status_bloc/status_bloc.dart';
-import 'package:zenith_monitor/app/bloc/terminal_bloc/terminal_bloc.dart';
-import 'package:zenith_monitor/app/components/firebase_authentication.dart';
-import 'package:zenith_monitor/app/components/firebase_receiver.dart';
-import 'package:zenith_monitor/app/components/firebase_uploader.dart';
-import 'package:zenith_monitor/app/components/local_database.dart';
-import 'package:zenith_monitor/app/components/usb.dart';
-import 'package:zenith_monitor/app/components/location.dart';
-import 'package:zenith_monitor/app/bloc/logger_bloc/logger_bloc.dart';
-import 'package:zenith_monitor/app/views/loginPage/login.dart';
+import 'app/bloc/data_bloc/data_bloc.dart';
+import 'app/bloc/location_bloc/location_bloc.dart';
+import 'app/bloc/login_bloc/login_bloc.dart';
+import 'app/bloc/map_bloc/map_bloc.dart';
+import 'app/bloc/status_bloc/status_bloc.dart';
+import 'app/bloc/terminal_bloc/terminal_bloc.dart';
+import 'app/components/firebase_authentication.dart';
+import 'app/components/firebase_receiver.dart';
+import 'app/components/firebase_uploader.dart';
+import 'app/components/local_database.dart';
+import 'app/components/usb.dart';
+import 'app/components/location.dart';
+import 'app/bloc/logger_bloc/logger_bloc.dart';
+import 'app/views/loginPage/LoginPage.dart';
+import 'app/views/loginPage/login.dart';
 
-<<<<<<< HEAD
 // import 'app/views/loginPage/fakeLoginPage.dart';
-import 'app/views/mainScreen/widgets/mainScreenWidget.dart';
-=======
-import 'app/views/loginPage/fakeLoginPage.dart';
+
 import 'app/views/mainScreen/widgets/main_screen_widget.dart';
->>>>>>> origin/master
 import 'app/views/terminal/terminal.dart';
 
 void main() {
@@ -83,15 +80,15 @@ class Application extends StatelessWidget {
       child: MaterialApp(
         showPerformanceOverlay: false, // shows fps
         debugShowCheckedModeBanner: false,
-        title: 'Main Screen',
+        title: "Main Screen",
         theme: ThemeData(
           primaryColor: Colors.black,
         ),
-        initialRoute: '/login',
+        initialRoute: "/login",
         routes: {
-          '/login': (context) => Login(),
-          '/map': (context) => MainScreen(),
-          '/terminal': (context) => TerminalView2(),
+          "/login": (context) => LoginPage(),
+          "/map": (context) => MainScreen(),
+          "/terminal": (context) => TerminalView2(),
         },
       ),
     );

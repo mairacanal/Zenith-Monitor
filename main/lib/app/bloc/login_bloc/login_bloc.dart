@@ -8,10 +8,15 @@ import 'package:zenith_monitor/app/models/user.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
+enum LoginForm {
+  signin,
+  register,
+  reset,
+}
+
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthManager authManager;
   LoginBloc(this.authManager) : super(LoginInitial());
-
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is LoginStart) {
@@ -52,6 +57,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginResetSuccesful();
       } else {
         yield LoginResetFailed();
+      }
+    } else if (event is ChangeForm) {
+      switch (event.page) {
+        case LoginForm.signin:
+          yield LoginInitial();
+          break;
+        case LoginForm.register:
+          yield LoginRegisterPage();
+          break;
+        case LoginForm.reset:
+          yield LoginResetPage();
+          break;
       }
     }
   }

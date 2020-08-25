@@ -19,7 +19,7 @@ class _LoginState extends State<Login> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    BlocProvider.of<LoginBloc>(context).add(LoginStart());
+    // BlocProvider.of<LoginBloc>(context).add(LoginStart());
   }
 
   // final AuthService _auth = AuthService();
@@ -46,7 +46,7 @@ class _LoginState extends State<Login> {
           return Loader();
         }
         return Scaffold(
-          backgroundColor: Color.fromRGBO(
+          backgroundColor: const Color.fromRGBO(
               30, 28, 27, 0.0), //sla pq mas o Z ficou mais destacado assim
           body: Container(
             child: Form(
@@ -146,7 +146,9 @@ class _LoginState extends State<Login> {
                             alignment: Alignment.centerRight,
                             child: FlatButton(
                               child: Text("Recuperar Senha"),
-                              onPressed: widget.toggleUpdatePassword,
+                              onPressed: () =>
+                                  BlocProvider.of<LoginBloc>(context)
+                                      .add(ChangeForm(LoginForm.reset)),
                             ),
                           ),
                         ),
@@ -234,7 +236,8 @@ class _LoginState extends State<Login> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  widget.toggleView();
+                                  BlocProvider.of<LoginBloc>(context)
+                                      .add(ChangeForm(LoginForm.register));
                                 },
                               ),
                             ),

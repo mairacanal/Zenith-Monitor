@@ -24,3 +24,9 @@ class LoginSignIn extends LoginEvent {
 
   LoginSignIn(this.data);
 }
+
+class ChangeForm extends LoginEvent {
+  final LoginForm page;
+
+  ChangeForm(this.page);
+}
