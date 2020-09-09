@@ -11,6 +11,7 @@ import 'package:zenith_monitor/app/components/local_database.dart';
 import 'package:zenith_monitor/app/components/usb.dart';
 import 'package:zenith_monitor/app/components/location.dart';
 import 'package:zenith_monitor/app/bloc/logger_bloc/logger_bloc.dart';
+import 'package:zenith_monitor/app/views/statistics/statistics.dart';
 
 import 'app/views/loginPage/fakeLoginPage.dart';
 import 'app/views/mainScreen/widgets/main_screen_widget.dart';
@@ -76,6 +77,7 @@ class Application extends StatelessWidget {
           '/login': (context) => LoginPage(),
           '/map': (context) => MainScreen(),
           '/terminal': (context) => TerminalView2(),
+          '/statistics': (context) => StatisticsView(),
         },
       ),
     );
